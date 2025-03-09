@@ -483,9 +483,13 @@
   </audio>
 <script>
     let musicStarted = false;
-    let audio = document.getElementById("bg-music");
+    let audio = document.getElementById("backgroundMusic");
     function startMusic() {
         if (!musicStarted) {
+            let lastTime = sessionStorage.getItem("musicTime");
+            if (lastTime) {
+                audio.currentTime = lastTime; // Resume from last position
+            }
             audio.play();
             musicStarted = true;
             sessionStorage.setItem("musicPlaying", "true"); // Store play state
@@ -493,14 +497,10 @@
     }
     window.onload = function () {
         let wasPlaying = sessionStorage.getItem("musicPlaying");
-        let lastTime = sessionStorage.getItem("musicTime");
         if (wasPlaying === "true") {
             document.addEventListener("click", startMusic, { once: true });
-            if (lastTime) {
-                audio.currentTime = lastTime; // Resume from last position
-            }
         }
-   };
+    };
     // Save the current time before leaving the page
     window.onbeforeunload = function () {
         sessionStorage.setItem("musicTime", audio.currentTime);
