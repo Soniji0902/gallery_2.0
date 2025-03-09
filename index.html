@@ -262,21 +262,30 @@
   </audio>
 <script>
     let musicStarted = false;
-   function startMusic() {
-    if (!musicStarted) {
-        var audio = document.getElementById("bg-music");
-        audio.play();
-        musicStarted = true;
-        localStorage.setItem("musicPlaying", "true"); // Save play state
+    let audio = document.getElementById("bg-music");
+    function startMusic() {
+        if (!musicStarted) {
+            audio.play();
+            musicStarted = true;
+            sessionStorage.setItem("musicPlaying", "true"); // Store play state
+        }
     }
-}
-window.onload = function () {
-    var wasPlaying = localStorage.getItem("musicPlaying");
-    if (wasPlaying === "true") {
-        document.addEventListener("click", startMusic, { once: true });
-    }
-};
+    window.onload = function () {
+        let wasPlaying = sessionStorage.getItem("musicPlaying");
+        let lastTime = sessionStorage.getItem("musicTime");
+        if (wasPlaying === "true") {
+            document.addEventListener("click", startMusic, { once: true });
+            if (lastTime) {
+                audio.currentTime = lastTime; // Resume from last position
+            }
+        }
+   };
+    // Save the current time before leaving the page
+    window.onbeforeunload = function () {
+        sessionStorage.setItem("musicTime", audio.currentTime);
+    };
 </script>
+    
 
     <div class="stars"></div>
     <div class="container">
