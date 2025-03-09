@@ -255,6 +255,12 @@
     </style>
 </head>
 <body>
+    <!--music changes-->
+    </audio>id="backgroundMusic" autoplay loop>
+        <source src="song.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag.
+    </audio>
+
     <div class="stars"></div>
     <div class="container">
         <h1 class="main-heading">HAPPY WALA BIRTHDAY 🎂 NEHA 🥰</h1>
@@ -268,6 +274,19 @@
     </div>
 
     <script>
+         // Ensure music plays automatically (especially on mobile)
+        document.addEventListener('DOMContentLoaded', function() {
+            const audio = document.getElementById('backgroundMusic');
+            audio.volume = 0.5; // Adjust volume if needed
+
+            // Autoplay workaround for mobile browsers
+            const playAudio = () => {
+                audio.play().catch(error => console.log("Autoplay blocked: ", error));
+                document.removeEventListener('click', playAudio);
+            };
+            document.addEventListener('click', playAudio);
+        });
+
         // Create stars
         const starsContainer = document.querySelector('.stars');
         for (let i = 0; i < 150; i++) {
