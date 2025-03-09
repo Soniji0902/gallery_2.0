@@ -482,7 +482,23 @@
         <source src="song.mp3" type="audio/mpeg">
         Your browser does not support the audio tag.
   </audio>
-    
+<script>
+    let musicStarted = false;
+   function startMusic() {
+    if (!musicStarted) {
+        var audio = document.getElementById("bg-music");
+        audio.play();
+        musicStarted = true;
+        localStorage.setItem("musicPlaying", "true"); // Save play state
+    }
+}
+window.onload = function () {
+    var wasPlaying = localStorage.getItem("musicPlaying");
+    if (wasPlaying === "true") {
+        document.addEventListener("click", startMusic, { once: true });
+    }
+};
+</script>
     <div class="color-overlay"></div>
     <h1 class="main-heading">✨ Gallery of My Lugaai Ji ✨</h1>
     <div class="stars"></div>
