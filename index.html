@@ -274,6 +274,19 @@
 
     <script>
 
+                 // Ensure music plays automatically (especially on mobile)
+        document.addEventListener('DOMContentLoaded', function() {
+            const audio = document.getElementById('backgroundMusic');
+            audio.play().catch(() => {
+                console.log("Autoplay blocked");
+            });
+        document.body.addEventListener('click', function () {
+            if (audio.paused) {
+                audio.play();
+            }
+            });
+        });
+
         // Create stars
         const starsContainer = document.querySelector('.stars');
         for (let i = 0; i < 150; i++) {
